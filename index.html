@@ -670,7 +670,9 @@ section { position:relative; z-index:1; }
   .life-item:nth-child(even) .life-text { order:0; text-align:left; }
   .life-item:nth-child(odd)  .life-photo-wrap,
   .life-item:nth-child(even) .life-photo-wrap { margin:0; max-width:100%; }
-  .life-photo-wrap.portrait { max-width:270px; }
+  /* must out-specify the two rules above, which are (0,3,0) */
+  .life-item:nth-child(odd)  .life-photo-wrap.portrait,
+  .life-item:nth-child(even) .life-photo-wrap.portrait { max-width:300px; }
   .life-note { font-size:1.15rem; }
   #lightbox { padding:1.5rem; }
   #lightbox-close { top:.8rem; right:.8rem; }
