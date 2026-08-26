@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Md. Mahadi Hassan Nayem — Data Scientist & Researcher</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=IBM+Plex+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:    #07111e;
+  --navy2:   #0d1e30;
+  --navy3:   #122436;
+  --cream:   #f6f1ea;
+  --ivory:   #ede8e0;
+  --gold:    #b8922a;
+  --gold2:   #d4aa4a;
+  --gold-lt: #f0d27a;
+  --crimson: #8b1e2f;
+  --sage:    #2e5d50;
+  --sage-lt: #3e7a69;
+  --ink:     #1a1a24;
+  --muted:   #6a6460;
+  --line:    rgba(26,26,36,0.10);
+  --line-lt: rgba(26,26,36,0.06);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lora', Georgia, serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ─── Custom Cursor ─── */
+#cursor { position:fixed; width:10px; height:10px; background:var(--gold); border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .15s,height .15s,background .2s; mix-blend-mode:multiply; }
+#cursor-ring { position:fixed; width:38px; height:38px; border:1.5px solid var(--gold); border-radius:50%; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:width .3s,height .3s,opacity .3s; opacity:0.5; }
+
+/* ─── Noise texture ─── */
+body::before { content:''; position:fixed; inset:0; z-index:0; opacity:0.025; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); pointer-events:none; }
+
+/* ─── Navigation ─── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.1rem 3.5rem;
+  background:rgba(246,241,234,0.90);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+  transition:all .3s;
+}
+nav.scrolled { padding:.75rem 3.5rem; }
+.nav-logo {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem; font-weight:700; letter-spacing:.06em;
+  color:var(--ink); text-decoration:none;
+}
+.nav-logo em { color:var(--gold); font-style:normal; }
+.nav-links { display:flex; gap:2.2rem; list-style:none; }
+.nav-links a {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--muted); text-decoration:none; font-weight:400;
+  position:relative; padding-bottom:3px; transition:color .2s;
+}
+.nav-links a::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1px; background:var(--gold); transition:width .3s; }
+.nav-links a:hover { color:var(--ink); }
+.nav-links a:hover::after { width:100%; }
+
+/* ─── Hero ─── */
+#hero {
+  min-height:100vh; display:flex; align-items:center;
+  padding:0;
+  position:relative; overflow:hidden;
+}
+.hero-bg-lines {
+  position:absolute; inset:0; z-index:0;
+  background-image:
+    linear-gradient(var(--line-lt) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-lt) 1px, transparent 1px);
+  background-size:72px 72px;
+  mask-image:radial-gradient(ellipse 90% 90% at 50% 50%, black 30%, transparent);
+}
+.hero-glow {
+  position:absolute; z-index:0;
+  width:600px; height:600px; border-radius:50%;
+  background:radial-gradient(circle, rgba(184,146,42,0.06) 0%, transparent 70%);
+  top:10%; right:5%; pointer-events:none;
+}
+
+.hero-inner {
+  position:relative; z-index:1;
+  max-width:1200px; margin:0 auto; width:100%;
+  padding:6.8rem 3.5rem 3.5rem;
+  display:grid; grid-template-columns:1fr 400px; gap:4rem; align-items:center;
+}
+
+.hero-left {}
+.hero-eyebrow {
+  display:flex; align-items:center; gap:1rem; margin-bottom:1.1rem;
+  opacity:0; animation:fadeUp .7s .2s forwards;
+}
+.hero-tag {
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-family:'IBM Plex Mono',monospace; font-size:.68rem;
+  letter-spacing:.12em; color:var(--gold);
+  border:1px solid rgba(184,146,42,0.4); padding:.3rem .75rem;
+  border-radius:2px;
+}
+.hero-tag::before { content:'◆'; font-size:.45rem; }
+
+h1.hero-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.9rem,5.6vw,5.3rem);
+  font-weight:600; line-height:1.02; letter-spacing:-.01em;
+  margin-bottom:1rem;
+  opacity:0; animation:fadeUp .9s .4s forwards;
+}
+h1.hero-name .name-last { color:var(--sage); display:block; }
+
+.hero-roles {
+  display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1.15rem;
+  opacity:0; animation:fadeUp .8s .6s forwards;
+}
+.hero-role-chip {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.72rem; letter-spacing:.08em;
+  padding:.3rem .75rem; border-radius:2px;
+  background:var(--ivory); border:1px solid var(--line);
+  color:var(--muted);
+}
+.hero-role-chip.primary { background:var(--navy); color:var(--cream); border-color:var(--navy); }
+
+.hero-desc {
+  font-size:.98rem; line-height:1.72; color:var(--muted);
+  max-width:100%; margin-bottom:1.35rem;
+  opacity:0; animation:fadeUp .8s .8s forwards;
+}
+.hero-desc strong { color:var(--ink); font-weight:600; }
+
+.hero-ctas {
+  display:flex; gap:1rem; flex-wrap:wrap;
+  opacity:0; animation:fadeUp .8s 1s forwards;
+}
+.btn-primary {
+  display:inline-flex; align-items:center; gap:.5rem;
+  background:var(--navy); color:var(--cream);
+  padding:.75rem 1.7rem; font-family:'IBM Plex Mono',monospace;
+  font-size:.75rem; letter-spacing:.12em; text-transform:uppercase;
+  text-decoration:none; font-weight:500;
+  border:1px solid var(--navy);
+  transition:all .3s; position:relative; overflow:hidden;
+}
+.btn-primary::before { content:''; position:absolute; inset:0; background:var(--gold); transform:translateX(-100%); transition:transform .3s; }
+.btn-primary:hover::before { transform:translateX(0); }
+.btn-primary span { position:relative; z-index:1; }
+.btn-primary:hover { color:var(--navy); border-color:var(--gold); }
+.btn-outline {
+  display:inline-flex; align-items:center; gap:.5rem;
+  border:1px solid var(--ink); color:var(--ink);
+  padding:.75rem 1.7rem; font-family:'IBM Plex Mono',monospace;
+  font-size:.75rem; letter-spacing:.12em; text-transform:uppercase;
+  text-decoration:none; font-weight:400;
+  transition:all .3s;
+}
+.btn-outline:hover { background:var(--ink); color:var(--cream); }
+
+.hero-stats {
+  display:flex; gap:2.2rem; margin-top:1.55rem; padding-top:1.2rem;
+  border-top:1px solid var(--line);
+  opacity:0; animation:fadeUp .8s 1.2s forwards;
+  flex-wrap:wrap;
+}
+.stat-item { text-align:left; }
+.stat-num {
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.1rem; font-weight:700; color:var(--ink);
+  display:block; line-height:1;
+}
+.stat-label { font-family:'IBM Plex Mono',monospace; font-size:.62rem; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; margin-top:.2rem; }
+
+/* ─── Hero Photo ─── */
+.hero-right {
+  opacity:0; animation:fadeLeft .9s .5s forwards;
+  position:relative;
+}
+.hero-photo-wrap {
+  position:relative; width:100%;
+}
+.hero-photo-frame {
+  position:absolute; top:24px; left:24px; right:-24px; bottom:-24px;
+  border:1px solid rgba(184,146,42,0.25); border-radius:3px; z-index:0;
+}
+.hero-photo-frame2 {
+  position:absolute; top:12px; left:12px; right:-12px; bottom:-12px;
+  background:linear-gradient(135deg, rgba(184,146,42,0.08), rgba(46,93,80,0.05));
+  z-index:0; border-radius:3px;
+}
+.hero-photo {
+  position:relative; z-index:1;
+  width:100%; aspect-ratio:3/4; object-fit:cover; object-position:top center;
+  border-radius:3px;
+  box-shadow:0 20px 60px rgba(7,17,30,0.18), 0 4px 16px rgba(7,17,30,0.10);
+  display:block;
+}
+.hero-photo-tag {
+  position:absolute; top:-14px; left:-14px; z-index:2;
+  background:var(--crimson); color:#fff;
+  padding:.5rem .85rem;
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.62rem; letter-spacing:.1em; text-transform:uppercase;
+  border-radius:2px;
+}
+
+
+/* ─── Marquee ─── */
+.marquee-wrap {
+  background:var(--navy); color:var(--cream);
+  overflow:hidden; white-space:nowrap; padding:.65rem 0;
+  border-top:1px solid rgba(184,146,42,0.2);
+  border-bottom:1px solid rgba(184,146,42,0.2);
+}
+.marquee-track { display:inline-block; animation:marquee 28s linear infinite; }
+.marquee-item {
+  display:inline-block; padding:0 2.2rem;
+  font-family:'IBM Plex Mono',monospace; font-size:.68rem;
+  font-weight:400; letter-spacing:.12em; text-transform:uppercase;
+  color:rgba(246,241,234,0.65);
+}
+.marquee-sep { color:var(--gold2); opacity:.7; }
+
+/* ─── Section Base ─── */
+section { position:relative; z-index:1; }
+.section-wrap { max-width:1200px; margin:0 auto; padding:6rem 3.5rem; }
+.section-eyebrow {
+  font-family:'IBM Plex Mono',monospace; font-size:.68rem;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--gold);
+  margin-bottom:.6rem; display:flex; align-items:center; gap:.6rem;
+}
+.section-eyebrow::before { content:''; display:block; width:24px; height:1px; background:var(--gold); }
+.section-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,4vw,3.4rem); font-weight:600;
+  line-height:1.1; margin-bottom:3rem;
+}
+.section-title em { color:var(--sage); font-style:italic; }
+
+.divider { width:100%; height:1px; background:linear-gradient(90deg, transparent, rgba(184,146,42,0.4), transparent); }
+
+
+/* ─── About ─── */
+#about { background:var(--ivory); }
+.about-grid { display:grid; grid-template-columns:1fr 1.2fr; gap:6rem; align-items:start; }
+.about-photo-col { position:relative; }
+.about-photo-wrap { position:relative; width:320px; }
+.about-photo-frame-bg {
+  position:absolute; top:18px; left:18px; right:-18px; bottom:-18px;
+  background:linear-gradient(135deg, rgba(184,146,42,0.12), transparent);
+  border:1px solid rgba(184,146,42,0.2); border-radius:3px;
+}
+.about-photo {
+  position:relative; z-index:1;
+  width:100%; aspect-ratio:3/4; object-fit:cover; object-position:top center;
+  border-radius:3px;
+  box-shadow:0 12px 40px rgba(7,17,30,0.14);
+  display:block;
+}
+.about-photo-caption {
+  position:absolute; bottom:-1.5rem; left:0; right:0; z-index:2;
+  text-align:center;
+}
+.about-photo-name {
+  font-family:'Cormorant Garamond',serif;
+  font-size:.95rem; font-weight:600; color:var(--ink);
+}
+.about-photo-sub {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.6rem; letter-spacing:.1em; color:var(--muted); text-transform:uppercase;
+}
+.about-orcid {
+  display:inline-flex; align-items:center; gap:.4rem; margin-top:2.5rem;
+  font-family:'IBM Plex Mono',monospace; font-size:.68rem;
+  letter-spacing:.06em; color:var(--sage);
+  text-decoration:none; padding:.4rem .8rem;
+  border:1px solid rgba(46,93,80,0.3); border-radius:2px;
+  transition:all .2s;
+}
+.about-orcid:hover { background:var(--sage); color:#fff; }
+
+.about-text {}
+.about-text p { font-size:1rem; line-height:1.9; color:var(--muted); margin-bottom:1.2rem; }
+.about-text p strong { color:var(--ink); }
+.about-text p em { color:var(--sage); font-style:italic; }
+.about-research-interests { margin-top:2rem; }
+.research-interest-title {
+  font-family:'IBM Plex Mono',monospace; font-size:.68rem;
+  letter-spacing:.15em; text-transform:uppercase; color:var(--gold);
+  margin-bottom:.8rem;
+}
+.research-interests-list {
+  display:flex; flex-wrap:wrap; gap:.5rem;
+}
+.ri-chip {
+  font-family:'IBM Plex Mono',monospace; font-size:.68rem;
+  letter-spacing:.05em; padding:.35rem .8rem;
+  border-radius:2px; background:var(--cream); border:1px solid var(--line);
+  color:var(--ink); transition:all .2s;
+}
+.ri-chip:hover { background:var(--navy); color:var(--cream); border-color:var(--navy); }
+
+.about-contact { margin-top:2.2rem; display:flex; flex-direction:column; gap:.7rem; }
+.contact-item { display:flex; align-items:center; gap:.8rem; font-size:.88rem; color:var(--muted); }
+.contact-icon { width:30px; height:30px; background:var(--ink); color:var(--cream); display:flex; align-items:center; justify-content:center; font-size:.7rem; border-radius:2px; flex-shrink:0; }
+.contact-item a { color:inherit; text-decoration:none; transition:color .2s; }
+.contact-item a:hover { color:var(--sage); }
+
+/* ─── Publications ─── */
+#publications { background:var(--cream); }
+.pub-featured {
+  background:linear-gradient(135deg, var(--navy) 0%, var(--navy3) 60%, var(--navy2) 100%);
+  padding:3rem; border-radius:4px; margin-bottom:2rem;
+  position:relative; overflow:hidden;
+  opacity:0; transform:translateY(24px);
+  transition:opacity .7s, transform .7s;
+}
+.pub-featured.visible { opacity:1; transform:translateY(0); }
+.pub-featured::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg, var(--gold), var(--gold-lt), var(--gold));
+}
+.pub-featured-label {
+  font-family:'IBM Plex Mono',monospace; font-size:.62rem;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--crimson); margin-bottom:1rem;
+  display:flex; align-items:center; gap:.5rem;
+}
+.pub-featured-label::before { content:'★'; color:var(--gold); }
+.pub-featured-title {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem; font-weight:600; color:var(--cream);
+  line-height:1.35; margin-bottom:1rem;
+}
+.pub-featured-authors {
+  font-family:'IBM Plex Mono',monospace; font-size:.72rem;
+  letter-spacing:.04em; color:rgba(246,241,234,0.55);
+  margin-bottom:.5rem;
+}
+.pub-featured-journal {
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-family:'IBM Plex Mono',monospace; font-size:.7rem;
+  letter-spacing:.06em; color:var(--gold2);
+  margin-bottom:1.2rem;
+}
+.pub-featured-journal::before { content:'◆'; font-size:.45rem; }
+.pub-featured-desc {
+  font-size:.92rem; line-height:1.8; color:rgba(246,241,234,0.65);
+  margin-bottom:1.5rem; max-width:680px;
+}
+.pub-featured-links { display:flex; gap:.8rem; flex-wrap:wrap; }
+.pub-link {
+  display:inline-flex; align-items:center; gap:.4rem;
+  font-family:'IBM Plex Mono',monospace; font-size:.68rem;
+  letter-spacing:.08em; text-transform:uppercase; text-decoration:none;
+  padding:.45rem 1rem; border-radius:2px; border:1px solid;
+  transition:all .2s; font-weight:400;
+}
+.pub-link-primary { color:var(--navy); background:var(--gold2); border-color:var(--gold2); }
+.pub-link-primary:hover { background:var(--gold-lt); border-color:var(--gold-lt); }
+
+
+/* ─── Experience ─── */
+#experience { background:var(--ivory); }
+.exp-timeline { position:relative; padding-left:1.5rem; }
+.exp-timeline::before { content:''; position:absolute; left:0; top:8px; bottom:0; width:1px; background:linear-gradient(to bottom, var(--gold), transparent); }
+.exp-item {
+  position:relative; padding-bottom:3rem; padding-left:2.2rem;
+  opacity:0; transform:translateX(-18px);
+  transition:opacity .6s, transform .6s;
+}
+.exp-item.visible { opacity:1; transform:translateX(0); }
+.exp-dot {
+  position:absolute; left:-1.9rem; top:.3rem;
+  width:11px; height:11px; border-radius:50%;
+  background:var(--gold); border:2px solid var(--ivory);
+  box-shadow:0 0 0 3px rgba(184,146,42,0.3);
+}
+.exp-header {
+  display:flex; justify-content:space-between; align-items:flex-start;
+  flex-wrap:wrap; gap:.5rem; margin-bottom:.6rem;
+}
+.exp-company {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.25rem; font-weight:700; color:var(--ink);
+}
+.exp-period {
+  font-family:'IBM Plex Mono',monospace; font-size:.68rem;
+  color:var(--gold); letter-spacing:.08em;
+  background:rgba(184,146,42,0.08); padding:.28rem .65rem;
+  border:1px solid rgba(184,146,42,0.25); border-radius:2px;
+}
+.exp-role {
+  font-size:.85rem; font-weight:600; color:var(--crimson);
+  letter-spacing:.03em; margin-bottom:.3rem;
+}
+.exp-location {
+  font-family:'IBM Plex Mono',monospace;
+  font-size:.68rem; color:var(--muted); margin-bottom:.9rem;
+}
+.exp-bullets { list-style:none; display:flex; flex-direction:column; gap:.5rem; }
+.exp-bullets li {
+  font-size:.9rem; line-height:1.75; color:var(--muted);
+  display:flex; gap:.65rem;
+}
+.exp-bullets li::before { content:'→'; color:var(--gold); flex-shrink:0; margin-top:.05rem; }
+
+/* ─── Education ─── */
+#education { background:var(--cream); }
+.edu-grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; }
+.edu-card {
+  padding:2.5rem; border:1px solid var(--line); background:var(--ivory);
+  position:relative; overflow:hidden;
+  opacity:0; transform:translateY(20px);
+  transition:opacity .6s, transform .6s;
+}
+.edu-card.visible { opacity:1; transform:translateY(0); }
+.edu-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg, var(--gold), var(--sage)); }
+.edu-card::after { content:''; position:absolute; top:1.5rem; right:1.5rem; width:48px; height:48px; border-radius:50%; background:rgba(184,146,42,0.06); }
+.edu-degree { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:700; margin-bottom:.4rem; }
+.edu-field { font-size:.85rem; color:var(--sage); font-weight:600; margin-bottom:.2rem; }
+.edu-uni { font-size:.82rem; color:var(--muted); margin-bottom:.3rem; }
+.edu-period { font-family:'IBM Plex Mono',monospace; font-size:.68rem; color:var(--muted); margin-bottom:1.4rem; }
+.edu-stats { display:flex; gap:2.5rem; }
+.edu-stat { text-align:left; }
+.edu-stat-val { font-family:'Cormorant Garamond',serif; font-size:2rem; font-weight:700; color:var(--gold); display:block; }
+.edu-stat-label { font-family:'IBM Plex Mono',monospace; font-size:.6rem; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; }
+
+/* ─── Skills ─── */
+#skills { background:var(--navy); color:var(--cream); }
+#skills .section-eyebrow { color:var(--gold); }
+#skills .section-eyebrow::before { background:var(--gold); }
+#skills .section-title { color:var(--cream); }
+.skills-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(290px, 1fr)); gap:1.4rem; }
+.skill-card {
+  background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07);
+  padding:2rem;
+  opacity:0; transform:translateY(20px);
+  transition:opacity .5s, transform .5s, background .3s, border-color .3s;
+}
+.skill-card.visible { opacity:1; transform:translateY(0); }
+.skill-card:hover { background:rgba(184,146,42,0.07); border-color:rgba(184,146,42,0.25); }
+.skill-card-header { display:flex; align-items:center; gap:.8rem; margin-bottom:1.2rem; }
+.skill-card-icon { font-size:1.3rem; }
+.skill-card-title { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:700; color:var(--gold2); letter-spacing:.02em; }
+.skill-tags { display:flex; flex-wrap:wrap; gap:.4rem; }
+.skill-tag {
+  font-family:'IBM Plex Mono',monospace; font-size:.62rem;
+  padding:.22rem .55rem; border-radius:2px;
+  background:rgba(255,255,255,0.05); color:rgba(246,241,234,0.65);
+  letter-spacing:.06em; border:1px solid rgba(255,255,255,0.07);
+  transition:all .2s;
+}
+.skill-tag:hover { background:var(--gold2); color:var(--navy); border-color:var(--gold2); }
+.skill-level-wrap { margin-top:1.2rem; border-top:1px solid rgba(255,255,255,0.06); padding-top:1rem; display:flex; flex-direction:column; gap:.55rem; }
+.skill-level-row { display:flex; align-items:center; justify-content:space-between; }
+.skill-level-label { font-family:'IBM Plex Mono',monospace; font-size:.6rem; letter-spacing:.08em; text-transform:uppercase; color:rgba(246,241,234,0.38); }
+.skill-level-dots { display:flex; gap:5px; align-items:center; }
+.skill-dot { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,0.10); }
+.skill-dot.filled { background:var(--gold2); }
+
+/* ─── Achievements ─── */
+#achievements { background:var(--ivory); }
+.achieve-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:1.2rem; }
+.achieve-card {
+  padding:1.8rem; background:var(--cream); border-left:3px solid var(--gold);
+  opacity:0; transform:translateY(14px);
+  transition:opacity .5s, transform .5s;
+}
+.achieve-card.visible { opacity:1; transform:translateY(0); }
+.achieve-icon { font-size:1.2rem; margin-bottom:.7rem; }
+.achieve-title { font-size:.92rem; font-weight:600; color:var(--ink); margin-bottom:.25rem; font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-variant-numeric:lining-nums; font-feature-settings:'lnum' 1; }
+.achieve-org { font-size:.78rem; color:var(--sage); font-weight:600; margin-bottom:.2rem; font-family:'IBM Plex Mono',monospace; font-size:.7rem; letter-spacing:.04em; }
+.achieve-date { font-family:'IBM Plex Mono',monospace; font-size:.64rem; color:var(--muted); }
+
+/* ─── Contact ─── */
+#contact { background:var(--navy); color:var(--cream); }
+#contact .section-eyebrow { color:var(--gold); }
+#contact .section-eyebrow::before { background:var(--gold); }
+#contact .section-title { color:var(--cream); }
+.contact-wrapper { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; }
+.contact-left {}
+.contact-tagline { font-size:1rem; color:rgba(246,241,234,0.6); line-height:1.9; margin-bottom:2rem; }
+.contact-links { display:flex; flex-direction:column; gap:.8rem; }
+.contact-link-item {
+  display:flex; align-items:center; gap:1rem;
+  padding:1rem 1.4rem; border:1px solid rgba(255,255,255,0.08);
+  color:rgba(246,241,234,0.75); text-decoration:none;
+  font-size:.88rem; transition:all .3s;
+}
+.contact-link-item .c-icon { width:32px; font-size:.9rem; flex-shrink:0; }
+.contact-link-item:hover { background:rgba(184,146,42,0.12); border-color:rgba(184,146,42,0.35); color:var(--cream); }
+.contact-right {}
+.ref-card {
+  background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.07);
+  padding:2rem; margin-bottom:1.2rem;
+}
+.ref-label { font-family:'IBM Plex Mono',monospace; font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); margin-bottom:1rem; }
+.ref-name { font-family:'Cormorant Garamond',serif; font-size:1.15rem; font-weight:600; color:var(--cream); margin-bottom:.3rem; }
+.ref-role { font-size:.82rem; color:rgba(246,241,234,0.55); margin-bottom:.6rem; font-family:'IBM Plex Mono',monospace; font-size:.7rem; }
+.ref-contact { font-family:'IBM Plex Mono',monospace; font-size:.68rem; color:rgba(246,241,234,0.45); }
+.footer-note {
+  margin-top:4rem; padding-top:2rem; border-top:1px solid rgba(255,255,255,0.06);
+  display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;
+}
+.footer-note-text { font-family:'IBM Plex Mono',monospace; font-size:.64rem; letter-spacing:.08em; color:rgba(246,241,234,0.2); }
+
+/* --- Projects --- */
+#projects { background:var(--cream); }
+.proj-card {
+  background:var(--ivory); border:1px solid var(--line);
+  border-left:3px solid var(--gold);
+  padding:2.8rem; margin-bottom:1.6rem;
+  position:relative; overflow:hidden;
+  opacity:0; transform:translateY(20px);
+  transition:opacity .6s, transform .6s;
+}
+.proj-card.visible { opacity:1; transform:translateY(0); }
+.proj-card::after { content:''; position:absolute; top:-40px; right:-40px; width:150px; height:150px; border-radius:50%; background:rgba(184,146,42,0.05); }
+.proj-head { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:.8rem; margin-bottom:.9rem; position:relative; z-index:1; }
+.proj-name { font-family:'Cormorant Garamond',serif; font-size:1.45rem; font-weight:700; color:var(--ink); line-height:1.3; max-width:640px; }
+.proj-name .proj-mono { font-family:'IBM Plex Mono',monospace; font-size:1.05rem; color:var(--sage); }
+.proj-role { font-family:'IBM Plex Mono',monospace; font-size:.66rem; letter-spacing:.08em; color:var(--gold); background:rgba(184,146,42,0.08); border:1px solid rgba(184,146,42,0.25); padding:.3rem .7rem; border-radius:2px; white-space:nowrap; }
+.proj-meta { font-family:'IBM Plex Mono',monospace; font-size:.68rem; letter-spacing:.05em; color:var(--muted); margin-bottom:1rem; position:relative; z-index:1; }
+.proj-desc { font-size:.93rem; line-height:1.85; color:var(--muted); max-width:720px; position:relative; z-index:1; }
+.proj-links-title { font-family:'IBM Plex Mono',monospace; font-size:.64rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); margin:1.8rem 0 .8rem; position:relative; z-index:1; }
+.proj-links { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:.7rem; position:relative; z-index:1; }
+.proj-link {
+  display:flex; align-items:flex-start; gap:.7rem;
+  padding:.85rem 1.1rem; background:var(--cream);
+  border:1px solid var(--line); border-radius:2px;
+  color:var(--ink); text-decoration:none;
+  font-size:.82rem; line-height:1.5; transition:all .25s;
+}
+.proj-link:hover { border-color:var(--gold); background:rgba(184,146,42,0.07); transform:translateX(3px); }
+.proj-link .pl-icon { color:var(--gold); flex-shrink:0; font-family:'IBM Plex Mono',monospace; font-size:.72rem; margin-top:.15rem; }
+
+/* --- Life Events --- */
+#life { background:var(--ivory); }
+.life-timeline { position:relative; max-width:1020px; margin:0 auto; }
+.life-timeline::before {
+  content:''; position:absolute; left:50%; top:0; bottom:0; width:1px;
+  transform:translateX(-50%);
+  background:linear-gradient(to bottom, transparent, var(--gold) 7%, var(--gold) 93%, transparent);
+}
+.life-item {
+  position:relative; display:grid; grid-template-columns:1fr 1fr;
+  gap:4rem; align-items:center; margin-bottom:4.5rem;
+  opacity:0; transform:translateY(26px);
+  transition:opacity .7s, transform .7s;
+}
+.life-item.visible { opacity:1; transform:translateY(0); }
+.life-item:last-child { margin-bottom:0; }
+.life-dot {
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:13px; height:13px; border-radius:50%;
+  background:var(--gold); border:2px solid var(--ivory);
+  box-shadow:0 0 0 4px rgba(184,146,42,0.22); z-index:2;
+}
+
+.life-photo-wrap { position:relative; max-width:470px; }
+.life-photo-wrap.portrait { max-width:330px; }
+.life-item:nth-child(odd)  .life-photo-wrap { margin-left:auto; margin-right:0; }
+.life-item:nth-child(even) .life-photo-wrap { margin-left:0; margin-right:auto; }
+.life-item:nth-child(even) .life-media { order:2; }
+.life-item:nth-child(even) .life-text  { order:1; text-align:right; }
+.life-frame {
+  position:absolute; inset:0; transform:translate(14px,14px);
+  border:1px solid rgba(184,146,42,0.35); border-radius:3px;
+  z-index:0; transition:transform .35s;
+}
+.life-photo {
+  position:relative; z-index:1; display:block;
+  width:100%; height:auto; border-radius:3px;
+  box-shadow:0 14px 40px rgba(7,17,30,0.16);
+  transition:transform .35s, box-shadow .35s;
+}
+.life-photo-wrap:hover .life-photo { transform:translate(-4px,-4px); box-shadow:0 22px 52px rgba(7,17,30,0.26); }
+.life-photo-wrap:hover .life-frame { transform:translate(20px,20px); }
+.life-zoom {
+  position:absolute; z-index:2; right:.7rem; bottom:.7rem;
+  background:rgba(7,17,30,0.78); color:var(--gold2);
+  font-family:'IBM Plex Mono',monospace; font-size:.6rem;
+  letter-spacing:.1em; text-transform:uppercase;
+  padding:.35rem .6rem; border-radius:2px;
+  opacity:0; transition:opacity .3s;
+}
+.life-photo-wrap:hover .life-zoom { opacity:1; }
+
+.life-date {
+  display:inline-block; font-family:'IBM Plex Mono',monospace;
+  font-size:.68rem; letter-spacing:.1em; color:var(--gold);
+  background:rgba(184,146,42,0.08);
+  border:1px solid rgba(184,146,42,0.28);
+  padding:.3rem .7rem; border-radius:2px; margin-bottom:1rem;
+}
+.life-note {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem; font-weight:500; line-height:1.5; color:var(--ink);
+  font-variant-numeric:lining-nums; font-feature-settings:'lnum' 1;
+}
+
+/* --- Lightbox --- */
+#lightbox {
+  position:fixed; inset:0; z-index:9000;
+  background:rgba(7,17,30,0.94); backdrop-filter:blur(6px);
+  display:flex; align-items:center; justify-content:center;
+  padding:3.5rem 2rem;
+  opacity:0; pointer-events:none; transition:opacity .3s;
+}
+#lightbox.open { opacity:1; pointer-events:auto; }
+#lightbox img {
+  max-width:100%; max-height:100%; object-fit:contain;
+  border-radius:3px; box-shadow:0 30px 80px rgba(0,0,0,0.55);
+}
+#lightbox-close {
+  position:absolute; top:1.5rem; right:2rem;
+  width:42px; height:42px; border-radius:2px;
+  background:none; border:1px solid rgba(246,241,234,0.3);
+  color:var(--cream); font-family:'IBM Plex Mono',monospace;
+  font-size:1.2rem; line-height:1; cursor:none;
+  transition:background .2s, color .2s, border-color .2s;
+}
+#lightbox-close:hover { background:var(--gold2); color:var(--navy); border-color:var(--gold2); }
+
+/* ─── Animations ─── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeLeft { from{opacity:0;transform:translateX(24px)} to{opacity:1;transform:translateX(0)} }
+@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+/* ─── Decorative floats ─── */
+.deco-float {
+  position:absolute; pointer-events:none;
+  font-family:'IBM Plex Mono',monospace; font-size:.65rem;
+  color:rgba(184,146,42,0.15); letter-spacing:.1em;
+  animation:float 7s ease-in-out infinite;
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 900px) {
+  nav { padding:1rem 1.5rem; }
+  .nav-links { display:none; }
+  .section-wrap { padding:4rem 1.5rem; }
+  .hero-inner { grid-template-columns:1fr; gap:3rem; padding:7rem 1.5rem 4rem; }
+  .hero-right { order:-1; max-width:260px; }
+  .about-grid { grid-template-columns:1fr; gap:3rem; }
+  .about-photo-wrap { width:100%; max-width:260px; }
+  .edu-grid { grid-template-columns:1fr; }
+  .contact-wrapper { grid-template-columns:1fr; gap:3rem; }
+  h1.hero-name { font-size:2.8rem; }
+  .hero-stats { gap:1.5rem; }
+  .life-timeline::before { left:9px; }
+  .life-item { grid-template-columns:1fr; gap:1.3rem; padding-left:2.6rem; margin-bottom:3.2rem; }
+  .life-dot { left:9px; top:14px; transform:translate(-50%,0); }
+  .life-item:nth-child(even) .life-media { order:0; }
+  .life-item:nth-child(even) .life-text { order:0; text-align:left; }
+  .life-item:nth-child(odd)  .life-photo-wrap,
+  .life-item:nth-child(even) .life-photo-wrap { margin:0; max-width:100%; }
+  .life-photo-wrap.portrait { max-width:270px; }
+  .life-note { font-size:1.15rem; }
+  #lightbox { padding:1.5rem; }
+  #lightbox-close { top:.8rem; right:.8rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- Navigation -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">M<em>.</em>H<em>.</em> Nayem</a>
+  <ul class="nav-links">
+    <li><a href="#about">Profile</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#life">Life</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section id="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-glow"></div>
+
+  <span class="deco-float" style="top:22%;right:48%;animation-delay:-2s;">{ Big Data · GLMs }</span>
+  <span class="deco-float" style="top:68%;right:46%;animation-delay:-4s;font-size:.58rem;">Sci Rep &times;2 · CRAN</span>
+  <span class="deco-float" style="top:38%;left:2%;animation-delay:-1s;font-size:.58rem;">drglm · R Package</span>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <div class="hero-tag">Data Scientist &amp; Researcher</div>
+      </div>
+
+      <h1 class="hero-name">
+        Md. Mahadi<br>Hassan
+        <span class="name-last">Nayem</span>
+      </h1>
+
+      <div class="hero-roles">
+        <span class="hero-role-chip primary">Data Scientist</span>
+        <span class="hero-role-chip">Statistician</span>
+        <span class="hero-role-chip">Researcher</span>
+        <span class="hero-role-chip">CRAN R Package Author</span>
+      </div>
+
+      <p class="hero-desc">
+        As a <strong>Data Scientist and Statistician</strong>, I bring expertise in R programming,
+        R Shiny, large-scale statistical modelling, credit risk analytics, and AI-powered
+        enterprise solutions. I am also the author of the <strong>drglm</strong> R package and have
+        extensive experience developing data-driven products that transform complex data
+        into actionable insights.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="#publications" class="btn-primary"><span>View Publications</span> <span>→</span></a>
+        <a href="#experience" class="btn-outline">Experience ↓</a>
+        <a href="#contact" class="btn-outline">Get in Touch →</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-num" data-count="5">0</span>
+          <span class="stat-label">Yrs Experience</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-count="2">0</span>
+          <span class="stat-label">Publications</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-count="1">0</span>
+          <span class="stat-label">CRAN Package</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num" data-count="6">0</span>
+          <span class="stat-label">Organisations</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-photo-wrap">
+        <div class="hero-photo-frame2"></div>
+        <div class="hero-photo-frame"></div>
+        <div class="hero-photo-tag">Dhaka, Bangladesh</div>
+        <img src="profile.jpg" alt="Md. Mahadi Hassan Nayem" class="hero-photo">
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- Marquee -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">Statistical Modelling</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">Big Data GLMs</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">Divide &amp; Recombine</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">Credit Scorecard Development</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">R · Python · SQL</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">Machine Learning</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">LLM &amp; RAG Systems</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">R Shiny · Power BI</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">Scientific Reports 2026</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">CRAN · drglm</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">Statistical Modelling</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">Big Data GLMs</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">Divide &amp; Recombine</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">Credit Scorecard Development</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">R · Python · SQL</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">Machine Learning</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">LLM &amp; RAG Systems</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">R Shiny · Power BI</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">Scientific Reports 2026</span>
+    <span class="marquee-item marquee-sep">◆</span>
+    <span class="marquee-item">CRAN · drglm</span>
+    <span class="marquee-item marquee-sep">◆</span>
+  </div>
+</div>
+
+<!-- About -->
+<section id="about">
+  <div class="section-wrap">
+    <div class="about-grid">
+      <div class="about-photo-col">
+        <div class="about-photo-wrap">
+          <div class="about-photo-frame-bg"></div>
+          <img src="profile.jpg" alt="Md. Mahadi Hassan Nayem" class="about-photo">
+        </div>
+        <div style="margin-top:3rem;">
+          <a href="https://orcid.org/0009-0008-5393-9800" target="_blank" class="about-orcid">
+            <span>⬤</span> ORCID · 0009-0008-5393-9800
+          </a>
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="section-eyebrow">About</div>
+        <h2 class="section-title">Where <em>statistical rigour</em><br>meets real-world impact.</h2>
+
+        <p>I earned both my undergraduate and postgraduate degrees in Statistics from the <strong>University of Chittagong</strong>, graduating <strong>first in my M.Sc. class</strong>. My work focuses on developing statistically rigorous and computationally scalable methods for datasets that exceed the capacity of a single machine. I am the author and maintainer of the <em>drglm</em> package on CRAN, which makes these scalable statistical methods accessible to the broader R community.</p>
+
+        <p>Professionally, I have developed credit risk scorecards, fine-tuned local large language models and retrieval-augmented generation systems, machine learning solutions, and automated reporting platforms across the financial and industrial sectors of Bangladesh. My work consistently transforms advanced statistical methodology into reliable, production-ready systems that deliver measurable operational value.</p>
+
+        <div class="about-research-interests">
+          <div class="research-interest-title">Research &amp; Domain Interests</div>
+          <div class="research-interests-list">
+            <span class="ri-chip">Big Data Statistical Inference</span>
+            <span class="ri-chip">Divide &amp; Recombine Methods</span>
+            <span class="ri-chip">Generalized Linear Models</span>
+            <span class="ri-chip">Biostatistics</span>
+            <span class="ri-chip">Health Data Analytics</span>
+            <span class="ri-chip">Bayesian Methods</span>
+            <span class="ri-chip">Machine Learning Theory</span>
+            <span class="ri-chip">Credit Risk Modelling</span>
+            <span class="ri-chip">Scalable Poisson Regression</span>
+            <span class="ri-chip">Scorecard Development</span>
+          </div>
+        </div>
+
+        <div class="about-contact">
+          <div class="contact-item">
+            <div class="contact-icon">✉</div>
+            <a href="mailto:mhnayem.cu.stat@outlook.com">mhnayem.cu.stat@outlook.com</a>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <span>Gulshan-2, Dhaka-1212, Bangladesh</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Publications & Research -->
+<section id="publications">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Academic Contribution</div>
+    <h2 class="section-title">Research &amp; <em>Publications</em></h2>
+
+    <!-- 01 - Sci Rep: Logistic D&R -->
+    <div class="pub-featured observe-me">
+      <div class="pub-featured-label">Flagship Publication &middot; Peer-Reviewed &middot; Nature Portfolio</div>
+      <div class="pub-featured-title">
+        Divide and Recombine Approaches for Fitting Logistic Regression to Large-Scale Health Surveillance Data: Application to Diabetes Risk Prediction in BRFSS
+      </div>
+      <div class="pub-featured-authors">Nayem, M.M.H., Biswas, S.C. (2026)</div>
+      <div class="pub-featured-journal">
+        Scientific Reports (Nature Portfolio) &middot; Vol. 16, Article 15980 &middot; DOI: 10.1038/s41598-026-46927-7
+      </div>
+      <p class="pub-featured-desc">
+        Applies divide-and-recombine (D&amp;R) statistical methodology to fit logistic regression models on the BRFSS dataset &mdash; one of the world's largest health surveillance systems. Demonstrates that D&amp;R estimates recover full-data inferential accuracy with dramatically reduced computational requirements, enabling scalable diabetes risk prediction at population scale.
+      </p>
+      <div class="pub-featured-links">
+        <a href="https://doi.org/10.1038/s41598-026-46927-7" target="_blank" class="pub-link pub-link-primary">Read Paper &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 02 - Sci Rep: Scalable Poisson D&R -->
+    <div class="pub-featured observe-me" style="transition-delay:.15s">
+      <div class="pub-featured-label">Peer-Reviewed &middot; Nature Portfolio &middot; 2026</div>
+      <div class="pub-featured-title">
+        Scalable Poisson Regression via Divide and Recombine with Asymptotic Theory, Monte Carlo Simulation, and Application to Cardiovascular Risk Factor Burden in BRFSS
+      </div>
+      <div class="pub-featured-authors">Nayem, M.M.H., Biswas, S.C. (2026)</div>
+      <div class="pub-featured-journal">
+        Scientific Reports (Nature Portfolio) &middot; 2026 &middot; DOI: 10.1038/s41598-026-64788-y
+      </div>
+      <p class="pub-featured-desc">
+        Extends the divide-and-recombine framework to Poisson regression for large-scale count data. Establishes the asymptotic properties of the recombined estimator, validates the theory through Monte Carlo simulation, and applies the method to cardiovascular risk factor burden in BRFSS &mdash; showing that partitioned estimation matches full-data inference at a fraction of the memory and compute cost.
+      </p>
+      <div class="pub-featured-links">
+        <a href="https://doi.org/10.1038/s41598-026-64788-y" target="_blank" class="pub-link pub-link-primary">Read Paper &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 03 - CRAN Package -->
+    <div class="pub-featured observe-me" style="transition-delay:.3s">
+      <div class="pub-featured-label">Software Package &middot; CRAN R Archive Network &middot; 2024</div>
+      <div class="pub-featured-title">
+        drglm: Fitting Linear and Generalized Linear Models in a Divide and Recombine Approach to Large Data Sets
+      </div>
+      <div class="pub-featured-authors">Nayem, M. (2024) &middot; R package v1.0 &middot; Author &amp; Maintainer</div>
+      <div class="pub-featured-journal">
+        CRAN R Package &middot; Published July 31, 2024 &middot; DOI: 10.32614/CRAN.package.drglm
+      </div>
+      <p class="pub-featured-desc">
+        An open-source R package enabling memory-efficient fitting of linear and generalized linear models &mdash; including multinomial logistic regression &mdash; on datasets too large to fit in RAM. Uses the divide-and-recombine statistical framework to produce statistically valid estimates equivalent to full-data analysis.
+      </p>
+      <div class="pub-featured-links">
+        <a href="https://cran.r-project.org/package=drglm" target="_blank" class="pub-link pub-link-primary">View on CRAN &rarr;</a>
+      </div>
+    </div>
+
+    <!-- 04 - M.Sc. Thesis -->
+    <div class="pub-featured observe-me" style="transition-delay:.45s">
+      <div class="pub-featured-label">M.Sc. Thesis &middot; University of Chittagong &middot; 2024</div>
+      <div class="pub-featured-title">
+        Application of Generalized Linear Models in Big Data: A &ldquo;Divide and Recombine&rdquo; Approach in R
+      </div>
+      <div class="pub-featured-authors">Nayem, M.M.H. &middot; Supervisor: Biswas, S.C.</div>
+      <div class="pub-featured-journal">
+        Department of Statistics, University of Chittagong &middot; M.Sc. in Statistics
+      </div>
+      <p class="pub-featured-desc">
+        The methodological foundation for the divide-and-recombine research programme: a theoretical and empirical treatment of fitting GLMs &mdash; linear, logistic, Poisson, and multinomial &mdash; to datasets that exceed available memory, implemented end-to-end in R. This work led directly to the <em>drglm</em> CRAN package and two subsequent journal publications.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Experience -->
+<section id="experience">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Career</div>
+    <h2 class="section-title">Professional <em>Experience</em></h2>
+
+    <div class="exp-timeline">
+
+      <!-- ACI Motors -->
+      <div class="exp-item observe-me">
+        <div class="exp-dot"></div>
+        <div class="exp-header">
+          <div>
+            <div class="exp-company">ACI Motors Limited</div>
+            <div class="exp-role">Data Scientist &mdash; Planning, Motors Marketing</div>
+            <div class="exp-location">&#128205; ACI Centre, 245 Tejgaon Industrial Area, Dhaka-1208</div>
+          </div>
+          <div class="exp-period">Feb 2026 &mdash; Present</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Developed a local LLM and RAG-powered AI assistant for Yamaha Bangladesh delivering product recommendations, pricing insights and model comparison based on customer preferences, with automated lead generation via WhatsApp and email, and a real-time audio classification model for detecting potential motorcycle engine faults from engine sound.</li>
+          <li>Built several Power BI dashboards for territory, region and area level service performance ranking across the Yamaha, Agri-Machinery, Construction Equipment, Foton and Water Pump &amp; Tools portfolios, standardising KPI definitions and enabling comparison across geographies and business lines.</li>
+          <li>Developed interactive Shiny dashboards for credit recovery and collection performance across the Sonalika Tractors and ACI Motors (Harvester) portfolios, enabling region, area and territory level tracking of collection efficiency, overdue trends and recovery performance &mdash; with dynamic filtering, transaction-level drill-down and historical versus current overdue comparison to support proactive credit control. Hosted on shinyapps.io for access from any network.</li>
+          <li>Developed and dockerized an automated Portfolio P&amp;L dashboard that dynamically extracts and consolidates monthly Excel data across 38 business portfolios, enabling real-time tracking of revenue, profitability and OPEX breakdowns and eliminating manual updates.</li>
+          <li>Developed an interactive MSR Analytics dashboard providing consolidated portfolio-level insights across Trade Price, NSI, GP and margin, with dynamic filtering and portfolio drill-down. Dockerized for seamless deployment across the organisation's network.</li>
+          <li>Built and deployed an R Shiny Employee Performance Tracking System on PostgreSQL (Supabase) &mdash; covering employee profiles, KPI-based rankings, promotion and transfer history, supervisor-level monitoring, change request management and an admin governance portal &mdash; with embedded Power BI dashboards for real-time territory, region and area performance.</li>
+          <li>Developed an automated email-based birthday wishing system that sends personalised cards and messages by employee designation, dispatched on behalf of the Managing Director of ACI Motors.</li>
+        </ul>
+      </div>
+
+      <!-- IDLC -->
+      <div class="exp-item observe-me" style="transition-delay:.1s">
+        <div class="exp-dot"></div>
+        <div class="exp-header">
+          <div>
+            <div class="exp-company">IDLC Finance PLC</div>
+            <div class="exp-role">Data Scientist &mdash; Credit Risk Management (SME)</div>
+            <div class="exp-location">&#128205; Corporate Head Office, Bay's Galleria, 57 Gulshan Avenue, Dhaka-1212</div>
+          </div>
+          <div class="exp-period">Feb 2025 &mdash; Feb 2026</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Improved and maintained the scorecard-based credit risk management (CRG V4) model on a logistic regression framework for risk grading of SME loan data &mdash; replacing the variable selection strategy, binning, scaling and evaluation of discriminatory power.</li>
+          <li>Trained by an IFC Credit Scoring Specialist on end-to-end scorecard development: portfolio performance analysis (roll rates, vintage analysis, performance window definition), WoE/IV binning and variable selection, logistic model development and scaling to a GB odds framework, discriminatory power testing (Gini, KS), and cut-off and swap-set analysis.</li>
+          <li>Applied model validation and monitoring techniques including score monotonicity, characteristic and score distribution checks, PSI for population stability, and LSO/HSO override region analysis &mdash; and compared actual versus expected bad rates by score band to identify segments where the CRG under-predicted defaults, informing recalibration and monitoring.</li>
+          <li>Designed and deployed interactive dashboards using R Shiny, containerized with Docker, enabling management to slice portfolio performance across branch, region, product and sector, with gt tables and in-app CSV export for end users.</li>
+          <li>Automated the division's recurring reporting in R: scheduled RMarkdown dashboards circulated by email with datasets attached, monthly portfolio analysis presentations generating 30 slides in minutes, and EBD circulation for restructured and rescheduled accounts &mdash; all with zero manual effort.</li>
+          <li>Built a custom R package to regenerate dashboards during database sync failures and to detect and clean duplicated or erroneous entries, strengthening data quality and reconciliation between source systems and reporting outputs.</li>
+          <li>Supplied data for management, stakeholder and regulatory reporting using MSSQL and R, owning metric definitions and reconciliation, and delivered reproducible outputs and visualisations for non-technical audiences.</li>
+          <li>Piloted fine-tuning of an LLM in Python on Google Colab using LoRA/QLoRA for a customer service chatbot, with a RAG-based system under development to evaluate its effectiveness.</li>
+        </ul>
+      </div>
+
+      <!-- Dream Tech -->
+      <div class="exp-item observe-me" style="transition-delay:.2s">
+        <div class="exp-dot"></div>
+        <div class="exp-header">
+          <div>
+            <div class="exp-company">Dream Technologies Limited</div>
+            <div class="exp-role">Business Analyst &amp; Programmer</div>
+            <div class="exp-location">&#128205; Nikunja, Dhaka, Bangladesh</div>
+          </div>
+          <div class="exp-period">Jun 2024 &mdash; Jan 2025</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Developed an automated attendance management system in R by processing raw data generated by multiple access control systems at the Bangladesh National Parliament Building and the National Telecommunications Monitoring Centre (NTMC), and integrated it into the core software through an API.</li>
+          <li>Constructed automated monthly dashboards in R to track sales and company prospects, and applied linear programming to minimise the transportation cost of products imported across different routes from other countries.</li>
+          <li>Prepared presentation decks for government projects including ICT Bhaban, BIWTA and Fire Service HQ, communicating complex analytical findings to executive stakeholders.</li>
+        </ul>
+      </div>
+
+      <!-- Forest Dept -->
+      <div class="exp-item observe-me" style="transition-delay:.3s">
+        <div class="exp-dot"></div>
+        <div class="exp-header">
+          <div>
+            <div class="exp-company">Director of Forest, Ministry of Forests</div>
+            <div class="exp-role">Data Analyst</div>
+            <div class="exp-location">&#128205; Chattogram, Bangladesh</div>
+          </div>
+          <div class="exp-period">Jul 2023 &mdash; Oct 2023</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Worked as a data analyst under the Director of Forests on the project titled &ldquo;Status of Wildlife and Tree Species in Sheikh Jamal Inani National Park, Cox's Bazar&rdquo;.</li>
+          <li>Identified key factors associated with wildlife conservation and deforestation using nonparametric statistical methods.</li>
+          <li>Identified species of trees beneficial to wildlife and monitored animal activity to gain a deeper understanding of their behaviour across various geographic locations.</li>
+          <li>Created charts and tables for data visualisation and summarised key findings, providing the information required for forest conservation and management strategies.</li>
+        </ul>
+      </div>
+
+      <!-- Pathmark -->
+      <div class="exp-item observe-me" style="transition-delay:.4s">
+        <div class="exp-dot"></div>
+        <div class="exp-header">
+          <div>
+            <div class="exp-company">Pathmark Associates Limited</div>
+            <div class="exp-role">Field Supervisor &amp; Data Manager</div>
+            <div class="exp-location">&#128205; Tejgaon Gulshan Link Road, Tejgaon, Dhaka</div>
+          </div>
+          <div class="exp-period">Jul 2021 &mdash; Nov 2021</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Worked as field supervisor on two IMED-funded projects: (1) impact analysis of the Bangladesh Rural Electrification Board's 1.8 million new-connection project, assessing the economic and social impact of electricity provision in Sunamganj; (2) monitoring the work progress of three newly developed colleges in Sunamganj.</li>
+          <li>Monitored data enumerators to smooth the data collection procedure and ensure proper field editing where necessary.</li>
+          <li>Conducted focus group discussions (FGDs) with local people to facilitate qualitative data collection, and performed inductive thematic analysis using NVIVO.</li>
+        </ul>
+      </div>
+
+      <!-- University of Chittagong -->
+      <div class="exp-item observe-me" style="transition-delay:.5s">
+        <div class="exp-dot"></div>
+        <div class="exp-header">
+          <div>
+            <div class="exp-company">University of Chittagong</div>
+            <div class="exp-role">Data Enumerator</div>
+            <div class="exp-location">&#128205; Hathazari, Chattogram, Bangladesh</div>
+          </div>
+          <div class="exp-period">May 2021 &mdash; Jun 2021</div>
+        </div>
+        <ul class="exp-bullets">
+          <li>Contributed as a data enumerator for the research project titled &ldquo;Depression, Anxiety, and Stress among people in Dhaka and Chattogram cities during the COVID-19 pandemic&rdquo;.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Skills -->
+<section id="skills">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Technical Arsenal</div>
+    <h2 class="section-title">Skills &amp; <em style="color:var(--gold2)">Expertise</em></h2>
+
+    <div class="skills-grid">
+
+      <div class="skill-card observe-me">
+        <div class="skill-card-header">
+          <div class="skill-card-icon">&#127974;</div>
+          <div class="skill-card-title">Credit Risk &amp; Scorecards</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Scorecard Development</span>
+          <span class="skill-tag">WoE / IV Binning</span>
+          <span class="skill-tag">Variable Selection</span>
+          <span class="skill-tag">GB-Odds Scaling</span>
+          <span class="skill-tag">Gini &amp; KS</span>
+          <span class="skill-tag">PSI / Population Stability</span>
+          <span class="skill-tag">Score Monotonicity</span>
+          <span class="skill-tag">Roll Rate Analysis</span>
+          <span class="skill-tag">Vintage Analysis</span>
+          <span class="skill-tag">Cut-off &amp; Swap-Set Analysis</span>
+          <span class="skill-tag">LSO / HSO Override Regions</span>
+          <span class="skill-tag">Actual vs Expected Bad Rate</span>
+        </div>
+        <div class="skill-level-wrap">
+          <div class="skill-level-row">
+            <span class="skill-level-label">Proficiency</span>
+            <div class="skill-level-dots">
+              <span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card observe-me" style="transition-delay:.1s">
+        <div class="skill-card-header">
+          <div class="skill-card-icon">&#128202;</div>
+          <div class="skill-card-title">Statistical Modelling</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Generalised Linear Models</span>
+          <span class="skill-tag">Logistic Regression</span>
+          <span class="skill-tag">Linear Regression</span>
+          <span class="skill-tag">GLMs for Big Data</span>
+          <span class="skill-tag">Divide &amp; Recombine</span>
+          <span class="skill-tag">Univariate &amp; Multivariate Models</span>
+          <span class="skill-tag">Time Series Modelling</span>
+          <span class="skill-tag">Econometric Modelling</span>
+          <span class="skill-tag">Regression Analysis</span>
+          <span class="skill-tag">Survival Analysis</span>
+        </div>
+        <div class="skill-level-wrap">
+          <div class="skill-level-row">
+            <span class="skill-level-label">Proficiency</span>
+            <div class="skill-level-dots">
+              <span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card observe-me" style="transition-delay:.2s">
+        <div class="skill-card-header">
+          <div class="skill-card-icon">&#128187;</div>
+          <div class="skill-card-title">Programming &amp; Query Languages</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">R</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">MSSQL</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Supabase</span>
+        </div>
+        <div class="skill-level-wrap">
+          <div class="skill-level-row">
+            <span class="skill-level-label">R</span>
+            <div class="skill-level-dots">
+              <span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span>
+            </div>
+          </div>
+          <div class="skill-level-row">
+            <span class="skill-level-label">Python</span>
+            <div class="skill-level-dots">
+              <span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot"></span>
+            </div>
+          </div>
+          <div class="skill-level-row">
+            <span class="skill-level-label">SQL</span>
+            <div class="skill-level-dots">
+              <span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card observe-me" style="transition-delay:.3s">
+        <div class="skill-card-header">
+          <div class="skill-card-icon">&#129302;</div>
+          <div class="skill-card-title">Machine Learning &amp; AI</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Machine Learning</span>
+          <span class="skill-tag">Local LLM Deployment</span>
+          <span class="skill-tag">LLM Fine-tuning</span>
+          <span class="skill-tag">LoRA / QLoRA</span>
+          <span class="skill-tag">RAG Systems</span>
+          <span class="skill-tag">Audio Classification</span>
+          <span class="skill-tag">Credit Scoring</span>
+          <span class="skill-tag">Classification</span>
+          <span class="skill-tag">Feature Engineering</span>
+        </div>
+        <div class="skill-level-wrap">
+          <div class="skill-level-row">
+            <span class="skill-level-label">Proficiency</span>
+            <div class="skill-level-dots">
+              <span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card observe-me" style="transition-delay:.4s">
+        <div class="skill-card-header">
+          <div class="skill-card-icon">&#128200;</div>
+          <div class="skill-card-title">Dashboards &amp; Visualisation</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">R Shiny</span>
+          <span class="skill-tag">Power BI</span>
+          <span class="skill-tag">shinyapps.io</span>
+          <span class="skill-tag">ggplot2</span>
+          <span class="skill-tag">gt package</span>
+          <span class="skill-tag">plotly</span>
+          <span class="skill-tag">R Markdown</span>
+          <span class="skill-tag">Quarto</span>
+          <span class="skill-tag">Data Visualisation</span>
+        </div>
+        <div class="skill-level-wrap">
+          <div class="skill-level-row">
+            <span class="skill-level-label">R Shiny</span>
+            <div class="skill-level-dots">
+              <span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span>
+            </div>
+          </div>
+          <div class="skill-level-row">
+            <span class="skill-level-label">Power BI</span>
+            <div class="skill-level-dots">
+              <span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-card observe-me" style="transition-delay:.5s">
+        <div class="skill-card-header">
+          <div class="skill-card-icon">&#128736;</div>
+          <div class="skill-card-title">Analytics Tools &amp; Platforms</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">RStudio</span>
+          <span class="skill-tag">Positron</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">SPSS</span>
+          <span class="skill-tag">SAS</span>
+          <span class="skill-tag">Jamovi</span>
+          <span class="skill-tag">NVIVO</span>
+          <span class="skill-tag">Azure Data Studio</span>
+          <span class="skill-tag">Microsoft Excel</span>
+          <span class="skill-tag">Git</span>
+        </div>
+      </div>
+
+      <div class="skill-card observe-me" style="transition-delay:.6s">
+        <div class="skill-card-header">
+          <div class="skill-card-icon">&#128300;</div>
+          <div class="skill-card-title">Research Methods</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Quantitative Data Analysis</span>
+          <span class="skill-tag">Qualitative Data Analysis</span>
+          <span class="skill-tag">Multivariate Techniques</span>
+          <span class="skill-tag">Nonparametric Tests</span>
+          <span class="skill-tag">Thematic Analysis</span>
+          <span class="skill-tag">FGDs</span>
+          <span class="skill-tag">Survey Design</span>
+          <span class="skill-tag">Literature Review</span>
+        </div>
+      </div>
+
+      <div class="skill-card observe-me" style="transition-delay:.7s">
+        <div class="skill-card-header">
+          <div class="skill-card-icon">&#128221;</div>
+          <div class="skill-card-title">Authoring &amp; Reporting</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">LaTeX</span>
+          <span class="skill-tag">R Markdown</span>
+          <span class="skill-tag">Quarto</span>
+          <span class="skill-tag">Microsoft Office</span>
+          <span class="skill-tag">Microsoft PowerPoint</span>
+        </div>
+      </div>
+
+      <div class="skill-card observe-me" style="transition-delay:.8s">
+        <div class="skill-card-header">
+          <div class="skill-card-icon">&#127760;</div>
+          <div class="skill-card-title">Languages</div>
+        </div>
+        <div class="skill-tags">
+          <span class="skill-tag">Bangla</span>
+          <span class="skill-tag">English</span>
+        </div>
+        <div class="skill-level-wrap">
+          <div class="skill-level-row">
+            <span class="skill-level-label">Bangla &mdash; Native</span>
+            <div class="skill-level-dots">
+              <span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span>
+            </div>
+          </div>
+          <div class="skill-level-row">
+            <span class="skill-level-label">English &mdash; Full Professional</span>
+            <div class="skill-level-dots">
+              <span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot filled"></span><span class="skill-dot"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Projects -->
+<section id="projects">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Open Source</div>
+    <h2 class="section-title">Selected <em>Projects</em></h2>
+
+    <div class="proj-card observe-me">
+      <div class="proj-head">
+        <div class="proj-name">
+          <span class="proj-mono">drglm</span> &mdash; Fitting Linear and Generalized Linear Models in a &ldquo;Divide and Recombine&rdquo; Approach to Large Data Sets
+        </div>
+        <div class="proj-role">Author &amp; Maintainer</div>
+      </div>
+      <div class="proj-meta">R Package v1.0 &middot; CRAN &middot; Published 31 July 2024 &middot; DOI: 10.32614/CRAN.package.drglm</div>
+      <p class="proj-desc">
+        An open-source R package that brings the divide-and-recombine framework to everyday modelling work. It fits linear, generalized linear and multinomial logistic regression models to data sets far larger than available memory by partitioning the data, estimating within each partition, and recombining the sub-estimates into statistically valid full-data equivalents &mdash; with a formula interface familiar to any <span class="proj-mono">glm()</span> user.
+      </p>
+      <div class="proj-links-title">Documentation &amp; Vignettes</div>
+      <div class="proj-links">
+        <a href="https://cran.r-project.org/package=drglm" target="_blank" class="proj-link">
+          <span class="pl-icon">&#9679;</span>
+          <span>drglm on CRAN &mdash; package home, reference manual and downloads</span>
+        </a>
+        <a href="https://cran.r-project.org/web/packages/drglm/vignettes/drglm.html" target="_blank" class="proj-link">
+          <span class="pl-icon">&#9679;</span>
+          <span>Introduction to &lsquo;drglm&rsquo; &mdash; getting started with the package</span>
+        </a>
+        <a href="https://cran.r-project.org/web/packages/drglm/vignettes/big_drglm.html" target="_blank" class="proj-link">
+          <span class="pl-icon">&#9679;</span>
+          <span>Fitting models to out-of-memory data sets in a Divide and Recombine approach</span>
+        </a>
+        <a href="https://cran.r-project.org/web/packages/drglm/vignettes/drglm_multinom.html" target="_blank" class="proj-link">
+          <span class="pl-icon">&#9679;</span>
+          <span>Fitting Multinomial Logistic Regression in a Divide and Recombine approach</span>
+        </a>
+        <a href="https://cran.r-universe.dev/drglm" target="_blank" class="proj-link">
+          <span class="pl-icon">&#9679;</span>
+          <span>drglm on R-universe &mdash; development builds and package status</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Education -->
+<section id="education">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Academic Background</div>
+    <h2 class="section-title">Education &amp; <em>Qualifications</em></h2>
+
+    <div class="edu-grid">
+      <div class="edu-card observe-me">
+        <div class="edu-degree">Master of Science</div>
+        <div class="edu-field">Statistics (First Class — 1st Position)</div>
+        <div class="edu-uni">University of Chittagong, Bangladesh</div>
+        <div class="edu-period">September 2022 — May 2024</div>
+        <div class="edu-stats">
+          <div class="edu-stat">
+            <span class="edu-stat-val">3.64</span>
+            <span class="edu-stat-label">CGPA / 4.00</span>
+          </div>
+          <div class="edu-stat">
+            <span class="edu-stat-val">1st</span>
+            <span class="edu-stat-label">Class Position</span>
+          </div>
+        </div>
+      </div>
+      <div class="edu-card observe-me" style="transition-delay:.15s">
+        <div class="edu-degree">Bachelor of Science</div>
+        <div class="edu-field">Statistics (Hons.)</div>
+        <div class="edu-uni">University of Chittagong, Bangladesh</div>
+        <div class="edu-period">January 2017 — August 2022</div>
+        <div class="edu-stats">
+          <div class="edu-stat">
+            <span class="edu-stat-val">3.65</span>
+            <span class="edu-stat-label">CGPA / 4.00</span>
+          </div>
+          <div class="edu-stat">
+            <span class="edu-stat-val">3rd</span>
+            <span class="edu-stat-label">Class Position</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="background:linear-gradient(90deg,transparent,rgba(184,146,42,0.2),transparent);"></div>
+
+<!-- Achievements -->
+<section id="achievements">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Recognition</div>
+    <h2 class="section-title">Achievements &amp; <em>Certifications</em></h2>
+
+    <div class="achieve-grid">
+      <div class="achieve-card observe-me">
+        <div class="achieve-icon">&#129351;</div>
+        <div class="achieve-title">Finalist &mdash; ACI AI Challenge: The 1</div>
+        <div class="achieve-org">ACI PLC</div>
+        <div class="achieve-date">Organisation-wide artificial intelligence competition</div>
+      </div>
+      <div class="achieve-card observe-me" style="transition-delay:.05s">
+        <div class="achieve-icon">🏆</div>
+        <div class="achieve-title">SAS Foundation Scholarship</div>
+        <div class="achieve-org">Dept. of Statistics · University of Chittagong</div>
+        <div class="achieve-date">10 February 2020 · Awarded for academic excellence among B.Sc. 3rd-year students</div>
+      </div>
+      <div class="achieve-card observe-me" style="transition-delay:.1s">
+        <div class="achieve-icon">🎖</div>
+        <div class="achieve-title">Certificate of Appreciation</div>
+        <div class="achieve-org">Dept. of Statistics · University of Chittagong</div>
+        <div class="achieve-date">18 November 2021 · Data enumerator project completion</div>
+      </div>
+      <div class="achieve-card observe-me" style="transition-delay:.15s">
+        <div class="achieve-icon">📦</div>
+        <div class="achieve-title">CRAN Package Author &amp; Maintainer</div>
+        <div class="achieve-org">The Comprehensive R Archive Network (CRAN)</div>
+        <div class="achieve-date">drglm · Published 31 July 2024 · DOI: 10.32614/CRAN.package.drglm</div>
+      </div>
+      <div class="achieve-card observe-me" style="transition-delay:.2s">
+        <div class="achieve-icon">📜</div>
+        <div class="achieve-title">Statistical Inference</div>
+        <div class="achieve-org">University of Amsterdam · Coursera</div>
+        <div class="achieve-date">Professional Certificate</div>
+      </div>
+      <div class="achieve-card observe-me" style="transition-delay:.3s">
+        <div class="achieve-icon">📜</div>
+        <div class="achieve-title">Experimental Designs Basics</div>
+        <div class="achieve-org">Arizona State University · Coursera</div>
+        <div class="achieve-date">Professional Certificate</div>
+      </div>
+      <div class="achieve-card observe-me" style="transition-delay:.4s">
+        <div class="achieve-icon">📜</div>
+        <div class="achieve-title">Factorial &amp; Fractional Factorial Design</div>
+        <div class="achieve-org">Arizona State University · Coursera</div>
+        <div class="achieve-date">Professional Certificate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- Life Events -->
+<section id="life">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Beyond the CV</div>
+    <h2 class="section-title">Life &amp; <em>Milestones</em></h2>
+    <div class="life-timeline" id="life-timeline"></div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged photo">
+  <button id="lightbox-close" aria-label="Close">&#10005;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<div class="divider"></div>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="section-wrap">
+    <div class="section-eyebrow">Get In Touch</div>
+    <h2 class="section-title">Let's <em style="color:var(--gold2)">Connect</em></h2>
+
+    <div class="contact-wrapper">
+      <div class="contact-left">
+        <p class="contact-tagline">
+          Open to research collaborations, data science projects, and interesting statistical problems. Whether you are an organisation building data-driven systems or a researcher exploring a methodological challenge — I would welcome the conversation.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:mhnayem.cu.stat@outlook.com" class="contact-link-item">
+            <span class="c-icon">&#9993;</span>
+            <span>mhnayem.cu.stat@outlook.com</span>
+          </a>
+          <a href="https://orcid.org/0009-0008-5393-9800" target="_blank" class="contact-link-item">
+            <span class="c-icon">&#11044;</span>
+            <span>ORCID: 0009-0008-5393-9800</span>
+          </a>
+          <a href="https://doi.org/10.1038/s41598-026-46927-7" target="_blank" class="contact-link-item">
+            <span class="c-icon">&#128196;</span>
+            <span>Scientific Reports (2026) &mdash; Logistic D&amp;R in BRFSS</span>
+          </a>
+          <a href="https://doi.org/10.1038/s41598-026-64788-y" target="_blank" class="contact-link-item">
+            <span class="c-icon">&#128196;</span>
+            <span>Scientific Reports (2026) &mdash; Scalable Poisson D&amp;R</span>
+          </a>
+          <a href="https://cran.r-project.org/package=drglm" target="_blank" class="contact-link-item">
+            <span class="c-icon">&#128230;</span>
+            <span>drglm on CRAN</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-right">
+        <div class="ref-label">References</div>
+        <div class="ref-card">
+          <div class="ref-name">Available on request</div>
+          <div class="ref-role">Professional references from senior banking and industry leadership can be provided on request — please get in touch by email.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <span class="footer-note-text">© 2026 Md. Mahadi Hassan Nayem · Gulshan-2, Dhaka-1212, Bangladesh</span>
+      <span class="footer-note-text">Built with purpose · Open to collaboration</span>
+    </div>
+  </div>
+</section>
+
+<script>
+// ── Cursor ──
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+(function animateCursor() {
+  rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+  cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animateCursor);
+})();
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '18px'; cursor.style.height = '18px';
+    ring.style.width = '54px'; ring.style.height = '54px'; ring.style.opacity = '0.3';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '10px'; cursor.style.height = '10px';
+    ring.style.width = '38px'; ring.style.height = '38px'; ring.style.opacity = '0.5';
+  });
+});
+
+// ── Navbar ──
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── IntersectionObserver ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll(
+  '.observe-me, .exp-item, .skill-card, .edu-card, .pub-featured, .achieve-card, .proj-card'
+).forEach(el => observer.observe(el));
+
+// ── Counter Animation ──
+function animateCounter(el, target, suffix = '') {
+  let start = 0;
+  const dur = 1600;
+  const step = ts => {
+    if (!start) start = ts;
+    const prog = Math.min((ts - start) / dur, 1);
+    const ease = 1 - Math.pow(1 - prog, 3);
+    el.textContent = Math.floor(ease * target) + suffix;
+    if (prog < 1) requestAnimationFrame(step);
+    else el.textContent = target + suffix;
+  };
+  requestAnimationFrame(step);
+}
+
+const counterObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      document.querySelectorAll('[data-count]').forEach(el => {
+        animateCounter(el, +el.dataset.count, el.dataset.suffix || '');
+      });
+      counterObs.disconnect();
+    }
+  });
+}, { threshold: 0.4 });
+const statsEl = document.querySelector('.hero-stats');
+if (statsEl) counterObs.observe(statsEl);
+
+// -- Life Events ---------------------------------------------------------
+// To add a moment: drop the photo in the "life events" folder and add one
+// object below. Newest first. Left/right alternation is automatic.
+const LIFE_EVENTS = [
+  {
+    img:  'life-events/life-3.jpg',
+    date: '2026',
+    note: 'Recognition as a finalist of ACI AI Challenge: The 1.'
+  },
+  {
+    img:  'life-events/life-2.jpg',
+    date: '2025',
+    note: 'Training with Nikos Xanthopoulos, IFC Risk Management and Credit Scorecard Specialist, at IDLC Finance PLC.'
+  },
+  {
+    img:  'life-events/life-1.jpg',
+    date: '28 November 2024',
+    note: 'Inside the Bangladesh National Parliament Building, on duty as a Business Analyst and Statistical Programmer.'
+  }
+];
+
+const lifeTimeline = document.getElementById('life-timeline');
+if (lifeTimeline) {
+  LIFE_EVENTS.forEach((ev, i) => {
+    const item = document.createElement('div');
+    item.className = 'life-item';
+    item.style.transitionDelay = (i * 0.12) + 's';
+    item.innerHTML =
+      '<div class="life-dot"></div>' +
+      '<div class="life-media">' +
+        '<div class="life-photo-wrap">' +
+          '<div class="life-frame"></div>' +
+          '<img class="life-photo" src="' + ev.img + '" alt="' + ev.note.replace(/"/g, '&quot;') + '" loading="lazy">' +
+          '<span class="life-zoom">Click to enlarge</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="life-text">' +
+        '<div class="life-date">' + ev.date + '</div>' +
+        '<p class="life-note">' + ev.note + '</p>' +
+      '</div>';
+
+    const wrap = item.querySelector('.life-photo-wrap');
+    const img  = item.querySelector('.life-photo');
+    // Portrait shots get a narrower column so they don't tower over the row.
+    const markOrientation = () => {
+      if (img.naturalHeight > img.naturalWidth) wrap.classList.add('portrait');
+    };
+    if (img.complete && img.naturalWidth) markOrientation();
+    else img.addEventListener('load', markOrientation);
+
+    wrap.addEventListener('click', () => openLightbox(ev.img));
+
+    lifeTimeline.appendChild(item);
+    observer.observe(item);
+  });
+}
+
+// -- Lightbox -----------------------------------------------------------
+const lightbox    = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+
+function openLightbox(src) {
+  lightboxImg.src = src;
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+if (lightbox) {
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if (e.target !== lightboxImg) closeLightbox(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+  });
+}
+
+// -- Stagger exp-items --
+document.querySelectorAll('.exp-item').forEach((el, i) => {
+  el.style.transitionDelay = (i * 0.1) + 's';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>

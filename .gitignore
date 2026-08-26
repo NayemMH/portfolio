@@ -1,0 +1,27 @@
+# ── Source material & working files — not part of the published site ──
+# resume.txt contains third-party contact details (references) and must stay private.
+resume.txt
+CLAUDE.md
+portfolio.pre-*.backup.html
+_preview-*.html
+
+# Unused source image
+1779068750064.jpg.jpeg
+Image 1.png
+
+# ── Original camera photos ──
+# The page loads the optimised copies (life-1.jpg … life-3.jpg) only.
+# Originals are kept locally but not published — 1.jpg alone is 7.3 MB.
+life-events/1.jpg
+life-events/2.jpeg
+life-events/3.jpeg
+life-events/photo captions.txt
+
+# ── Tooling / OS cruft ──
+.claude/
+.vscode/
+.Rhistory
+.Rproj.user/
+Thumbs.db
+desktop.ini
+.DS_Store
