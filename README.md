@@ -3,7 +3,7 @@
 Personal portfolio of **Md. Mahadi Hassan Nayem** — Data Scientist, Statistician, and author of the
 [`drglm`](https://cran.r-project.org/package=drglm) R package.
 
-**Live site:** <https://mhnayem.github.io/portfolio/>
+**Live site:** <https://nayemmh.github.io/portfolio/>
 
 ---
 
