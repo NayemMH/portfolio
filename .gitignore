@@ -5,6 +5,10 @@ CLAUDE.md
 portfolio.pre-*.backup.html
 _preview-*.html
 
+# Local deployment cheat-sheet (contains local Windows paths).
+# To publish it instead, delete this line and run: git add DEPLOY.md
+DEPLOY.md
+
 # Unused source image
 1779068750064.jpg.jpeg
 Image 1.png
